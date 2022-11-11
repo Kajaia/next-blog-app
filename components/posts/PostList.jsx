@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function PostList({ posts }) {
   return (
@@ -24,7 +25,12 @@ export default function PostList({ posts }) {
                   />
                 </div>
                 <div className="card-body">
-                  <h6>{post.title}</h6>
+                  <Link
+                    href={`/posts/${post.id}`}
+                    className="stretched-link text-dark text-decoration-none"
+                  >
+                    <h6>{post.title}</h6>
+                  </Link>
                   <p className="card-text">{post.body}</p>
                 </div>
               </div>
