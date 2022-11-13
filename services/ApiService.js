@@ -9,5 +9,6 @@ const instance = axios.create({
 });
 
 export const getPosts = () => instance.get("/posts");
-
 export const getPostById = (id) => instance.get(`/posts/${id}`);
+
+export const getUserById = (id) => instance.get(`/users/${id}`);

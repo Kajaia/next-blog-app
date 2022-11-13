@@ -2,7 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Layout from "../../components/layout";
-import { getPostById, getPosts } from "../../services/ApiService";
+import AuthorDetails from "../../components/posts/AuthorDetails";
+import { getPostById, getPosts, getUserById } from "../../services/ApiService";
 
 export async function getStaticPaths() {
   const res = await getPosts();
@@ -21,16 +22,18 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await getPostById(params.id);
+  const post = await getPostById(params.id);
+  const user = await getUserById(post.data.userId);
 
   return {
     props: {
-      post: res.data,
+      post: post.data,
+      user: user.data,
     },
   };
 }
 
-export default function post({ post }) {
+export default function post({ post, user }) {
   return (
     <Layout>
       <Head>
@@ -48,15 +51,18 @@ export default function post({ post }) {
               }}
             >
               <Image
-                className="rounded shadow-sm mt-2"
+                className="rounded-3 shadow-sm mt-2"
                 src="https://loremflickr.com/320/240"
                 alt={post.title}
                 layout="fill"
                 objectFit="cover"
               />
             </div>
-            <p className="lead text-muted mt-4 text-start px-3">{post.body}</p>
-            <div className="col-12 text-start">
+            <p className="lead text-muted mt-4 mb-5 text-start px-3">
+              {post.body}
+            </p>
+            {user && <AuthorDetails user={user} />}
+            <div className="col-12 text-start mt-2 mb-4">
               <Link href="/" className="btn btn-link">
                 Back to homepage
               </Link>
