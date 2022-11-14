@@ -29,9 +29,8 @@ export default function PostList({ posts }) {
                     href={`/posts/${post.id}`}
                     className="stretched-link text-dark text-decoration-none"
                   >
-                    <h6>{post.title}</h6>
+                    <h6 className="mb-0">{post.title}</h6>
                   </Link>
-                  <p className="card-text">{post.body}</p>
                 </div>
               </div>
             </div>
